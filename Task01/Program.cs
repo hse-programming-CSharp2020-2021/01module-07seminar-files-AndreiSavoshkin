@@ -65,7 +65,10 @@ namespace _01_07_Files
             string output = "";
             for (int i = 0; i < array.Length; i++)
             {
-                output += array[i].ToString() + " ";
+                if (array[i])
+                    output += "true ";
+                else
+                    output += "false ";
             }
             File.WriteAllText(path, output);
         }
