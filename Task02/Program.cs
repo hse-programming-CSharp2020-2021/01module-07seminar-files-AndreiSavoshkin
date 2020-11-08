@@ -21,25 +21,61 @@ namespace Task02
     {
         private const string inputPath = "input.txt";
         private const string outputPath = "output.txt";
-        
+        private const int left = 1;
+        private const int right = 10000;
+
         static int[] ReadFile(string path)
         {
-            // TODO: implement this method
+            string[] elements = File.ReadAllText(path).Split(' ');
+            int[] array = new int[elements.Length];
+            for (int i = 0; i < elements.Length; i++)
+            {
+                array[i] = int.Parse(elements[i]);
+            }
+            return array;
         }
-        
+
         static bool CheckArray(int[] array)
         {
-            // TODO: implement this method
+            bool isInclude = true;
+            foreach (var item in array)
+            {
+                if (item > right || item <= left)
+                {
+                    isInclude = false;
+                    break;
+                }
+            }
+            return isInclude;
         }
-        
+
         static int[] ConvertArray(int[] array)
         {
-            // TODO: implement this method
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = GetPowerTwo(array[i]);
+            }
+            return array;
+        }
+
+        static int GetPowerTwo(int n)
+        {
+            int result = 1;
+            while (result * 2 < n)
+            {
+                result *= 2;
+            }
+            return result;
         }
 
         static void WriteFile(string path, int[] array)
         {
-            // TODO: implement this method
+            string output = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                output += array[i].ToString() + " ";
+            }
+            File.WriteAllText(path, output);
         }
 
         // you do not need to fill your file manually, you can work with console input
@@ -47,26 +83,31 @@ namespace Task02
         {
             // do not touch
             FillFile();
-            
+
             int[] A;
             int[] B;
-            
+
             try
             {
                 A = ReadFile(inputPath);
-                
+
                 if (!CheckArray(A))
-                    // TODO: implement this case
-                
+                {
+                    Console.WriteLine("Incorrect Input");
+                    return;
+                }
+
                 B = ConvertArray(A);
                 WriteFile(outputPath, B);
             }
-            // TODO: catch with meaningful message
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             // do not touch
             ConsoleOutput();
         }
-        
+
         #region Testing methods for Github Classroom, do not touch!
 
         static void FillFile()
